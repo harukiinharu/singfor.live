@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    background-color: var(--background-color-all);
+}
+
+:root {
+    --audio-height: 54px;
+    --audio-up-down-margin: 30px;
+    --container-width: 800px;
+    --line-off-color: black;
+    --line-on-color: #fd4a47;
+    --background-color-all: white;
+}
+
+ul {
+    transition-duration: 600ms;
+}
+
+ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--line-off-color);
+}
+
+li.on {
+    color: var(--line-on-color);
+    font-weight: bold;
+    /* letter-spacing: 2px; */
+}
+
+p {
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    height: 20px;
+    /* line-height: 17px; */
+    /* -webkit-line-clamp: 1; */
+    -webkit-box-orient: vertical;
+    /* display: -webkit-box; */
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+#mainaudio {
+    position: fixed;
+    width: calc(var(--container-width));
+    left: 0;
+    right: 0;
+    padding: var(--audio-up-down-margin) 0;
+    margin: 0 auto;
+    background-color: var(--background-color-all);
+}
+
+#container {
+    position: absolute;
+    width: var(--container-width);
+    left: 0;
+    right: 0;
+    padding-bottom: var(--audio-up-down-margin);
+    margin: calc(2 * var(--audio-up-down-margin) + var(--audio-height)) auto 0;
+    float: left;
+    overflow: hidden;
+    display: flex;
+}
+
+.lyriclist {
+    margin: 0 auto;
+    padding: 0;
+    width: auto;
+}
