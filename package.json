@@ -2,9 +2,11 @@
   "type": "module",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "d": "vite",
+    "b": "vite build",
+    "p": "vite preview",
+    "p-npx": "npx serve -s dist -p 3001",
+    "p-py": "python -m http.server -b 127.0.0.1 -d dist 3001"
   },
   "dependencies": {
     "react": "^19.0.0",
