@@ -7,23 +7,30 @@ interface LyricPlayerProps {
   lyricJson: Record<string, string[]>
 }
 
-const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricTime, lyricJson }) => {
-  const [currentLine, setCurrentLine] = useState(-1)
+const LyricPlayer: React.FC<LyricPlayerProps> = ({
+  audio,
+  lyricTime,
+  lyricJson,
+}) => {
+  const [currentLineIdx, setCurrentLine] = useState(-1)
   const containerRef = useRef<HTMLDivElement>(null)
   const pHeight = (20 + 16) * 5
   const tyMax = 2 * pHeight
 
   useEffect(() => {
     const handleTimeUpdate = () => {
-      const newCurrentLine = getCurrentLine(lyricTime, audio.currentTime)
-      setCurrentLine(newCurrentLine)
+      const newLineIdx = getCurrentLine(lyricTime, audio.currentTime)
+      if (newLineIdx !== currentLineIdx) {
+        // console.log(`cur:${currentLineIdx}, new:${newLineIdx}`)
+        setCurrentLine(newLineIdx)
+      }
     }
 
     audio.addEventListener('timeupdate', handleTimeUpdate)
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
-  }, [audio, lyricTime])
+  }, [currentLineIdx])
 
-  const translateY = -currentLine * pHeight
+  const translateY = -currentLineIdx * pHeight
   const finalTranslateY = -translateY > tyMax ? translateY + tyMax : 0
   return (
     <div id='container' ref={containerRef}>
@@ -32,7 +39,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricTime, lyricJson }
         style={{ transform: `translateY(${finalTranslateY}px)` }}
       >
         {Object.keys(lyricJson).map((key, index) => (
-          <li key={index} className={index === currentLine ? 'on' : ''}>
+          <li key={index} className={index === currentLineIdx ? 'on' : ''}>
             {lyricJson[key].map((line: string, i: number) => (
               <p key={i}>{line}</p>
             ))}
@@ -42,4 +49,5 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricTime, lyricJson }
     </div>
   )
 }
+
 export default LyricPlayer
