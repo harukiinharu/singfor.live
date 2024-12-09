@@ -16,17 +16,17 @@ function App() {
 
       try {
         const [nihongo, romaji, pinyin, zhCN] = await Promise.all([
-          fetch(`/lyric/${lyricName}-nihongo.txt`).then(res => res.text()),
-          fetch(`/lyric/${lyricName}-romaji.txt`).then(res => res.text()),
-          fetch(`/lyric/${lyricName}-pinyin.txt`).then(res => res.text()),
-          fetch(`/lyric/${lyricName}-zh_CN.txt`).then(res => res.text())
+          fetch(`./lyric/${lyricName}-nihongo.txt`).then(res => res.text()),
+          fetch(`./lyric/${lyricName}-romaji.txt`).then(res => res.text()),
+          fetch(`./lyric/${lyricName}-pinyin.txt`).then(res => res.text()),
+          fetch(`./lyric/${lyricName}-zh_CN.txt`).then(res => res.text())
         ]);
 
         const parseResult = parseLyrics(romaji, nihongo, pinyin, zhCN);
         setLyricData(parseResult);
 
         if (audioRef.current) {
-          audioRef.current.src = `/audio/${lyricName}.mp3`;
+          audioRef.current.src = `./audio/${lyricName}.mp3`;
           audioRef.current.volume = 0.5;
         }
       } catch (error) {
