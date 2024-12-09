@@ -18,16 +18,14 @@ export const getCurrentLine = (
   return left
 }
 
-export const getLyricTime = (lyricJson: Record<string, string[]>): number[] => {
-  const lyricTime: number[] = []
-
-  for (const timestamp in lyricJson) {
-    const curTime =
-      parseFloat(timestamp.substring(1, 3)) * 60 +
-      parseFloat(timestamp.substring(4, 10))
-
-    lyricTime.push(curTime)
+export const loadLyricJson = async (
+  lyricName: string
+): Promise<Record<string, string[]> | null> => {
+  try {
+    const response = await fetch(`./lyric/${lyricName}.json`)
+    const lyricJson: Record<string, string[]> = await response.json()
+    return lyricJson
+  } catch (error) {
+    return null
   }
-
-  return lyricTime
 }

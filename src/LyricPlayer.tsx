@@ -3,15 +3,10 @@ import { getCurrentLine } from './lyricUtils'
 
 interface LyricPlayerProps {
   audio: HTMLAudioElement
-  lyricTime: number[]
   lyricJson: Record<string, string[]>
 }
 
-const LyricPlayer: React.FC<LyricPlayerProps> = ({
-  audio,
-  lyricTime,
-  lyricJson,
-}) => {
+const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const [currentLineIdx, setCurrentLine] = useState(-1)
   const containerRef = useRef<HTMLDivElement>(null)
   const pHeight = (20 + 16) * 5
@@ -19,7 +14,15 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({
 
   useEffect(() => {
     const handleTimeUpdate = () => {
-      const newLineIdx = getCurrentLine(lyricTime, audio.currentTime)
+      const newLineIdx = getCurrentLine(
+        Object.keys(lyricJson).map(timestamp => {
+          return (
+            parseFloat(timestamp.substring(1, 3)) * 60 +
+            parseFloat(timestamp.substring(4, 10))
+          )
+        }),
+        audio.currentTime
+      )
       if (newLineIdx !== currentLineIdx) {
         // console.log(`cur:${currentLineIdx}, new:${newLineIdx}`)
         setCurrentLine(newLineIdx)

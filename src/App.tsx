@@ -1,44 +1,66 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router'
 import LyricPlayer from './LyricPlayer'
-import { getLyricTime } from './lyricUtils'
+import { loadLyricJson } from './lyricUtils'
 
 const App: React.FC = () => {
-  const [lyricData, setLyricData] = useState<{
-    lyricTime: number[]
-    lyricJson: Record<string, string[]>
-  } | null>(null)
+  const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
+    null
+  )
+  const [isNotFound, setIsNotFound] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const location = useLocation()
 
   useEffect(() => {
-    const lyricName =
-      new URLSearchParams(window.location.search).get('name') || '少年少女'
+    const lyricName = location.pathname.slice(1) || '少年少女'
 
-    fetch(`./lyric/${lyricName}.json`)
-      .then(res => res.json())
-      .then(lyricJson => {
-        const lyricTime = getLyricTime(lyricJson)
-        setLyricData({ lyricTime, lyricJson })
-      })
-      .catch(error => {
-        alert(`Error: lyric not found: ${lyricName}`)
-      })
-
-    if (audioRef.current) {
-      audioRef.current.src = `./audio/${lyricName}.mp3`
-      audioRef.current.volume = 0.5
-    }
-  }, [])
+    loadLyricJson(lyricName).then(result => {
+      if (result) {
+        setLyricJson(result)
+        setIsNotFound(false)
+        if (audioRef.current) {
+          audioRef.current.src = `./audio/${lyricName}.mp3`
+          audioRef.current.volume = 0.5
+          audioRef.current.load()
+        }
+      } else {
+        if (audioRef.current) {
+          audioRef.current.pause()
+          audioRef.current.currentTime = 0
+        }
+        setLyricJson(null)
+        setIsNotFound(true)
+      }
+    })
+  }, [location])
 
   return (
     <>
-      {lyricData && (
-        <LyricPlayer
-          audio={audioRef.current!}
-          lyricTime={lyricData.lyricTime}
-          lyricJson={lyricData.lyricJson}
-        />
+      {isNotFound ? (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+          }}
+        >
+          <h1>404 - Lyric Not Found</h1>
+        </div>
+      ) : (
+        lyricJson && (
+          <LyricPlayer
+            audio={audioRef.current!}
+            lyricJson={lyricJson}
+          />
+        )
       )}
-      <audio id='mainaudio' ref={audioRef} controls />
+      <audio
+        id='mainaudio'
+        ref={audioRef}
+        controls
+        style={{ display: isNotFound ? 'none' : 'block' }}
+      />
     </>
   )
 }
