@@ -20,7 +20,7 @@ const App: React.FC = () => {
         setLyricData({ lyricTime, lyricJson })
       })
       .catch(error => {
-        console.error(`Error: lyric not found: ${lyricName}`)
+        alert(`Error: lyric not found: ${lyricName}`)
       })
 
     if (audioRef.current) {
