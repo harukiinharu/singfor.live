@@ -3,5 +3,6 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "jsx": "react-jsx"
-  }
+  },
+  "include": ["src"]
 }
