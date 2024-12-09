@@ -10,8 +10,8 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const lyricName = params.get('name') || '少年少女'
+    const lyricName =
+      new URLSearchParams(window.location.search).get('name') || '少年少女'
 
     fetch(`./lyric/${lyricName}.json`)
       .then(res => res.json())
@@ -20,7 +20,7 @@ const App: React.FC = () => {
         setLyricData({ lyricTime, lyricJson })
       })
       .catch(error => {
-        console.error('Error loading lyrics:', error)
+        console.error(`Error: lyric not found: ${lyricName}`)
       })
 
     if (audioRef.current) {
