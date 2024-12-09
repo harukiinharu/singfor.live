@@ -7,7 +7,7 @@ interface LyricPlayerProps {
   lyricJson: Record<string, string[]>
 }
 
-export function LyricPlayer({ audio, lyricTime, lyricJson }: LyricPlayerProps) {
+const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricTime, lyricJson }) => {
   const [currentLine, setCurrentLine] = useState(-1)
   const containerRef = useRef<HTMLDivElement>(null)
   const pHeight = (20 + 16) * 5
@@ -42,3 +42,4 @@ export function LyricPlayer({ audio, lyricTime, lyricJson }: LyricPlayerProps) {
     </div>
   )
 }
+export default LyricPlayer

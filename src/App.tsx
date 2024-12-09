@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { LyricPlayer } from './LyricPlayer'
+import LyricPlayer from './LyricPlayer'
 import { getLyricTime } from './lyricUtils'
 
-function App() {
+const App: React.FC = () => {
   const [lyricData, setLyricData] = useState<{
     lyricTime: number[]
     lyricJson: Record<string, string[]>

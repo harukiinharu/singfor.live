@@ -1,7 +1,7 @@
-export function getCurrentLine(
+export const getCurrentLine = (
   lyricTime: number[],
   currentTime: number
-): number {
+): number => {
   let left = -1
   let right = lyricTime.length - 1
   let mid: number
@@ -18,7 +18,7 @@ export function getCurrentLine(
   return left
 }
 
-export function getLyricTime(lyricJson: Record<string, string[]>): number[] {
+export const getLyricTime = (lyricJson: Record<string, string[]>): number[] => {
   const lyricTime: number[] = []
 
   for (const timestamp in lyricJson) {
