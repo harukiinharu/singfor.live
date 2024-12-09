@@ -5,8 +5,7 @@
     "d": "vite",
     "b": "vite build",
     "p": "vite preview",
-    "p-npx": "npx serve -s dist -p 3001",
-    "p-py": "python -m http.server -b 127.0.0.1 -d dist 3001"
+    "p-static": "npx http-server dist -a 127.0.0.1 -p 3001"
   },
   "dependencies": {
     "react": "^19.0.0",
