@@ -8,7 +8,6 @@ interface LyricPlayerProps {
 
 const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const [currentLineIdx, setCurrentLine] = useState(-1)
-  const containerRef = useRef<HTMLDivElement>(null)
   const values = Object.values(lyricJson)
   const meanLength = Math.round(
     values.reduce((a, b) => a + b.length, 0) / values.length
@@ -40,20 +39,18 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const translateY = -currentLineIdx * pHeight
   const finalTranslateY = -translateY > tyMax ? translateY + tyMax : 0
   return (
-    <div id='container' ref={containerRef}>
-      <ul
-        className='lyriclist'
-        style={{ transform: `translateY(${finalTranslateY}px)` }}
-      >
-        {Object.keys(lyricJson).map((key, index) => (
-          <li key={index} className={index === currentLineIdx ? 'on' : ''}>
-            {lyricJson[key].map((line: string, i: number) => (
-              <p key={i}>{line}</p>
-            ))}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul
+      className='lyriclist'
+      style={{ transform: `translateY(${finalTranslateY}px)` }}
+    >
+      {Object.keys(lyricJson).map((key, index) => (
+        <li key={index} className={index === currentLineIdx ? 'on' : ''}>
+          {lyricJson[key].map((line: string, i: number) => (
+            <p key={i}>{line}</p>
+          ))}
+        </li>
+      ))}
+    </ul>
   )
 }
 

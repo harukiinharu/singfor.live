@@ -1,72 +1,97 @@
 body {
   margin: 0;
-  background-color: var(--background-color-all);
+  display: flex;
+  justify-content: center;
 }
 
 :root {
   --audio-height: 54px;
   --audio-up-down-margin: 30px;
-  --container-width: 600px;
+  --sidebar-width: 300px;
+  --mainaudio-width: 600px;
   --line-off-color: black;
   --line-on-color: #fd4a47;
   --background-color-all: white;
+  --root-width: 1000px;
 }
 
-ul {
+#root {
+  position: relative;
+  width: 100%;
+  max-width: var(--root-width);
+}
+
+#sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  padding-top: var(--audio-up-down-margin);
+}
+
+#sidebar a {
+  text-align: center;
+  padding: 15px;
+  margin: 0 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: black;
+  border: 1px solid transparent;
+}
+
+#sidebar a:hover,
+#sidebar a.active {
+  border: 1px solid transparent;
+  border-color: #fd4a47;
+}
+
+#container {
+  margin-left: var(--sidebar-width);
+  padding-top: calc(var(--audio-height) + var(--audio-up-down-margin) * 2);
+  position: relative;
+}
+
+#mainaudio {
+  position: fixed;
+  left: var(--sidebar-width);
+  right: 0;
+  top: 0;
+  width: var(--mainaudio-width);
+  padding: var(--audio-up-down-margin) 0;
+  margin: 0 auto;
+  background-color: var(--background-color-all);
+  z-index: 1;
+}
+
+.lyriclist {
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+  width: var(--mainaudio-width);
   transition-duration: 600ms;
 }
 
-ul,
-li {
+.lyriclist p {
+  text-overflow: ellipsis;
+  height: 20px;
+  text-align: center;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.lyriclist ul,
+.lyriclist li {
   list-style: none;
   padding: 0;
   margin: 0;
   color: var(--line-off-color);
 }
 
-li.on {
+.lyriclist li.on {
   color: var(--line-on-color);
   font-weight: bold;
-  /* letter-spacing: 2px; */
-}
-
-p {
-  /* overflow: hidden; */
-  text-overflow: ellipsis;
-  height: 20px;
-  /* line-height: 17px; */
-  /* -webkit-line-clamp: 1; */
-  -webkit-box-orient: vertical;
-  /* display: -webkit-box; */
-  /* text-align: center; */
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-#mainaudio {
-  position: fixed;
-  width: calc(var(--container-width));
-  left: 0;
-  right: 0;
-  padding: var(--audio-up-down-margin) 0;
-  margin: 0 auto;
-  background-color: var(--background-color-all);
-}
-
-#container {
-  position: absolute;
-  width: var(--container-width);
-  left: 0;
-  right: 0;
-  padding-bottom: var(--audio-up-down-margin);
-  margin: calc(2 * var(--audio-up-down-margin) + var(--audio-height)) auto 0;
-  float: left;
-  overflow: hidden;
-  display: flex;
-}
-
-.lyriclist {
-  margin: 0 auto;
-  padding: 0;
-  width: auto;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
 import LyricPlayer from './LyricPlayer'
+import Sidebar from './Sidebar'
 import { loadLyricJson } from './lyricUtils'
 
 const App: React.FC = () => {
@@ -12,7 +13,7 @@ const App: React.FC = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const lyricName = location.pathname.slice(1) || '生きていたんだよな'
+    const lyricName = location.pathname.slice(1)
 
     loadLyricJson(lyricName).then(result => {
       if (result) {
@@ -25,6 +26,7 @@ const App: React.FC = () => {
         }
       } else {
         if (audioRef.current) {
+          audioRef.current.src = ''
           audioRef.current.pause()
           audioRef.current.currentTime = 0
         }
@@ -36,28 +38,21 @@ const App: React.FC = () => {
 
   return (
     <>
-      {isNotFound ? (
-        <div
-          style={{
-            display: 'flex',
-            // alignItems: 'center',
-            justifyContent: 'center',
-            height: '100vh',
-          }}
-        >
-          <h1>404 - Lyric Not Found</h1>
-        </div>
-      ) : (
-        lyricJson && (
-          <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
-        )
-      )}
-      <audio
-        id='mainaudio'
-        ref={audioRef}
-        controls
-        style={{ display: isNotFound ? 'none' : 'block' }}
-      />
+      <Sidebar />
+      <div id='container'>
+        <audio
+          id='mainaudio'
+          ref={audioRef}
+          controls
+        />
+        {isNotFound ? (
+          <h1 style={{ textAlign: 'center' }}>404 - Lyric Not Found</h1>
+        ) : (
+          lyricJson && (
+            <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
+          )
+        )}
+      </div>
     </>
   )
 }
