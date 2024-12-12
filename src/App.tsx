@@ -14,6 +14,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const lyricName = location.pathname.slice(1)
+    if (lyricName === '') {
+      window.location.href = '#/生きていたんだよな'
+      return
+    }
 
     loadLyricJson(lyricName).then(result => {
       if (result) {
