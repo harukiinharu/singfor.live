@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const lyricName = location.pathname.slice(1) || '少年少女'
+    const lyricName = location.pathname.slice(1) || '生きていたんだよな'
 
     loadLyricJson(lyricName).then(result => {
       if (result) {
@@ -49,10 +49,7 @@ const App: React.FC = () => {
         </div>
       ) : (
         lyricJson && (
-          <LyricPlayer
-            audio={audioRef.current!}
-            lyricJson={lyricJson}
-          />
+          <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
         )
       )}
       <audio

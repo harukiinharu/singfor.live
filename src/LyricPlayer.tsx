@@ -9,7 +9,11 @@ interface LyricPlayerProps {
 const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const [currentLineIdx, setCurrentLine] = useState(-1)
   const containerRef = useRef<HTMLDivElement>(null)
-  const pHeight = (20 + 16) * 5
+  const values = Object.values(lyricJson)
+  const meanLength = Math.round(
+    values.reduce((a, b) => a + b.length, 0) / values.length
+  )
+  const pHeight = (20 + 16) * meanLength
   const tyMax = 2 * pHeight
 
   useEffect(() => {
