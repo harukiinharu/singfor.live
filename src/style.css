@@ -15,6 +15,14 @@ body {
   --root-width: 1000px;
 }
 
+#github-logo {
+  position: fixed;
+  top: var(--audio-up-down-margin);
+  right: var(--audio-up-down-margin);
+  z-index: 0;
+  width: 50px;
+}
+
 #root {
   position: relative;
   width: 100%;

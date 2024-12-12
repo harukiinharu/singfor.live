@@ -44,11 +44,7 @@ const App: React.FC = () => {
     <>
       <Sidebar />
       <div id='container'>
-        <audio
-          id='mainaudio'
-          ref={audioRef}
-          controls
-        />
+        <audio id='mainaudio' ref={audioRef} controls />
         {isNotFound ? (
           <h1 style={{ textAlign: 'center' }}>404 - Lyric Not Found</h1>
         ) : (
