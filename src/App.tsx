@@ -40,7 +40,7 @@ const App: React.FC = () => {
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
+            // alignItems: 'center',
             justifyContent: 'center',
             height: '100vh',
           }}

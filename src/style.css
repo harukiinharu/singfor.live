@@ -6,7 +6,7 @@ body {
 :root {
   --audio-height: 54px;
   --audio-up-down-margin: 30px;
-  --container-width: 800px;
+  --container-width: 600px;
   --line-off-color: black;
   --line-on-color: #fd4a47;
   --background-color-all: white;
@@ -38,7 +38,7 @@ p {
   /* -webkit-line-clamp: 1; */
   -webkit-box-orient: vertical;
   /* display: -webkit-box; */
-  text-align: center;
+  /* text-align: center; */
   margin-top: 0;
   margin-bottom: 16px;
 }
