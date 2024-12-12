@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router'
 
-const lyricNames = ['生きていたんだよな']
+const lyricNames = ['生きていたんだよな', '僕が死のうと思ったのは']
 
 const Sidebar: React.FC = () => {
   return (
