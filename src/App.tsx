@@ -15,7 +15,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const lyricName = location.pathname.slice(1)
     if (lyricName === '') {
-      window.location.href = '#/生きていたんだよな'
+      window.location.href = '#/iki'
       return
     }
 

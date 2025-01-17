@@ -1,13 +1,12 @@
 import { NavLink } from 'react-router'
-
-const lyricNames = ['生きていたんだよな', '僕が死のうと思ったのは', '少年少女']
+import { lyricNamesMap } from './route'
 
 const Sidebar: React.FC = () => {
   return (
     <div id='sidebar'>
-      {lyricNames.map(name => (
-        <NavLink key={name} to={`/${name}`}>
-          {name}
+      {lyricNamesMap.map(route => (
+        <NavLink key={route.id} to={`/${route.id}`}>
+          {route.name}
         </NavLink>
       ))}
     </div>
