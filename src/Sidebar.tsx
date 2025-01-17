@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router'
-import { lyricNamesMap } from './route'
+import { lyricNamesMap } from './routes'
 
 const Sidebar: React.FC = () => {
   return (
