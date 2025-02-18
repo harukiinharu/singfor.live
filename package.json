@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.4.0",
   "scripts": {
     "d": "vite --open",
     "b": "vite build",
