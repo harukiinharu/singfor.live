@@ -3,7 +3,11 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2021", "ES2021.Promise"]
+    "lib": ["DOM", "DOM.Iterable", "ES2021", "ES2021.Promise"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

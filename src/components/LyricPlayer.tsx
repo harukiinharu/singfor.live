@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCurrentLine } from './lyricUtils'
+import { getCurrentLine } from '@/lib/lyricUtils'
 
 interface LyricPlayerProps {
   audio: HTMLAudioElement
@@ -40,13 +40,20 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const finalTranslateY = -translateY > tyMax ? translateY + tyMax : 0
   return (
     <ul
-      className='lyriclist'
+      className='relative mx-auto p-0 w-[600px] duration-600'
       style={{ transform: `translateY(${finalTranslateY}px)` }}
     >
       {Object.keys(lyricJson).map((key, index) => (
-        <li key={index} className={index === currentLineIdx ? 'on' : ''}>
+        <li
+          key={index}
+          className={`list-none p-0 m-0 ${
+            index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''
+          }`}
+        >
           {lyricJson[key].map((line: string, i: number) => (
-            <p key={i}>{line}</p>
+            <p key={i} className='truncate h-5 text-center mt-0 mb-4'>
+              {line}
+            </p>
           ))}
         </li>
       ))}

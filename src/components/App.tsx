@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router'
-import LyricPlayer from './LyricPlayer'
-import Sidebar from './Sidebar'
-import { loadLyricJson } from './lyricUtils'
+import { useLocation } from 'react-router-dom'
+import LyricPlayer from '@/components/LyricPlayer'
+import Sidebar from '@/components/Sidebar'
+import { loadLyricJson } from '@/lib/lyricUtils'
+import GithubLink from '@/components/GithubLink'
 
 const App: React.FC = () => {
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
@@ -42,16 +43,28 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Sidebar />
-      <div id='container'>
-        <audio id='mainaudio' ref={audioRef} controls />
-        {isNotFound ? (
-          <h1 style={{ textAlign: 'center' }}>404 - Lyric Not Found</h1>
-        ) : (
-          lyricJson && (
-            <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
-          )
-        )}
+      <GithubLink />
+      <div className='flex justify-center min-h-screen'>
+        <div className='flex'>
+          <Sidebar />
+          <div className='w-[600px]'>
+            <div className='sticky top-0 bg-white py-[30px] z-10'>
+              <audio className='w-full' ref={audioRef} controls />
+            </div>
+            <div className='w-full'>
+              {isNotFound ? (
+                <h1 className='text-center'>404 - Lyric Not Found</h1>
+              ) : (
+                lyricJson && (
+                  <LyricPlayer
+                    audio={audioRef.current!}
+                    lyricJson={lyricJson}
+                  />
+                )
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
