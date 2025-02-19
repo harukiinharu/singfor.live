@@ -40,11 +40,11 @@ const Player: React.FC = () => {
   }, [location])
 
   return (
-    <div className='w-[600px]'>
-      <div className='sticky top-0 py-[30px] bg-background transition-colors duration-500 z-10'>
+    <div className='max-w-[80vw]'>
+      <div className='sticky flex justify-center top-0 py-[30px] bg-background transition-colors duration-500 z-10'>
         <audio className='w-full' ref={audioRef} controls />
       </div>
-      <div className='w-full'>
+      <div className='flex justify-center'>
         {isNotFound ? (
           <h1 className='text-center'>404 - Lyric Not Found</h1>
         ) : (

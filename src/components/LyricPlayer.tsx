@@ -54,7 +54,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           }`}
         >
           {lyricJson[key].map((line: string, i: number) => (
-            <p key={i} className='truncate h-5 text-center mt-0 mb-4'>
+            <p key={i} className='break-words min-h-5 text-center mt-0 mb-4'>
               {line}
             </p>
           ))}
