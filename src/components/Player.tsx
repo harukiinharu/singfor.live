@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
 import { loadLyricJson } from '@/lyricUtils'
+import { useIsMobile } from '@/useMobile'
+import { MobileSidebar } from '@/components/Sidebar'
 
 const Player: React.FC = () => {
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
@@ -39,9 +41,12 @@ const Player: React.FC = () => {
     })
   }, [location])
 
+  const isMobile = useIsMobile()
+
   return (
     <div className='max-w-[80vw]'>
-      <div className='sticky flex justify-center top-0 py-[30px] bg-background transition-colors duration-500 z-10'>
+      <div className='sticky flex flex-col justify-center top-0 py-[30px] bg-background transition-colors duration-500 z-1'>
+        {isMobile ? <MobileSidebar /> : <></>}
         <audio className='w-full' ref={audioRef} controls />
       </div>
       <div className='flex justify-center'>
