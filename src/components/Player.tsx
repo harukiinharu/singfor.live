@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
-import { loadLyricJson } from '@/lib/lyricUtils'
+import { loadLyricJson } from '@/lyricUtils'
 
 const Player: React.FC = () => {
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
@@ -41,7 +41,7 @@ const Player: React.FC = () => {
 
   return (
     <div className='w-[600px]'>
-      <div className='sticky top-0 bg-white py-[30px] z-10'>
+      <div className='sticky top-0 py-[30px] bg-background transition-colors duration-500 z-10'>
         <audio className='w-full' ref={audioRef} controls />
       </div>
       <div className='w-full'>

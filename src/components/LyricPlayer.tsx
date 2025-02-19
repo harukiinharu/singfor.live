@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCurrentLine } from '@/lib/lyricUtils'
+import { getCurrentLine } from '@/lyricUtils'
 
 interface LyricPlayerProps {
   audio: HTMLAudioElement

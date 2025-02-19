@@ -5,14 +5,18 @@ import Player from '@/components/Player'
 import GithubLink from '@/components/GithubLink'
 import '@/global.css'
 
-createRoot(document.getElementById('root')!).render(
-  <HashRouter>
-    <GithubLink />
-    <div className='flex justify-center min-h-screen'>
-      <div className='flex'>
-        <Sidebar />
-        <Player />
+const App = () => {
+  return (
+    <HashRouter>
+      <GithubLink />
+      <div className='flex justify-center min-h-screen'>
+        <div className='flex'>
+          <Sidebar />
+          <Player />
+        </div>
       </div>
-    </div>
-  </HashRouter>
-)
+    </HashRouter>
+  )
+}
+
+createRoot(document.getElementById('root')!).render(<App />)
