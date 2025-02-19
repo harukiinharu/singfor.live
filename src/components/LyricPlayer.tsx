@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { getCurrentLine } from '@/lyricUtils'
 
 interface LyricPlayerProps {
@@ -8,12 +8,8 @@ interface LyricPlayerProps {
 
 const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const [currentLineIdx, setCurrentLine] = useState(-1)
-  const values = Object.values(lyricJson)
-  const meanLength = Math.round(
-    values.reduce((a, b) => a + b.length, 0) / values.length
-  )
-  const pHeight = (20 + 16) * meanLength
-  const tyMax = 2 * pHeight
+  const containerRef = useRef<HTMLUListElement>(null)
+  const lineRefs = useRef<(HTMLLIElement | null)[]>([])
 
   useEffect(() => {
     const handleTimeUpdate = () => {
@@ -27,8 +23,14 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
         audio.currentTime
       )
       if (newLineIdx !== currentLineIdx) {
-        // console.log(`cur:${currentLineIdx}, new:${newLineIdx}`)
         setCurrentLine(newLineIdx)
+        // Scroll to the current line smoothly
+        if (newLineIdx >= 0 && lineRefs.current[newLineIdx]) {
+          lineRefs.current[newLineIdx]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
+        }
       }
     }
 
@@ -36,16 +38,17 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
   }, [currentLineIdx])
 
-  const translateY = -currentLineIdx * pHeight
-  const finalTranslateY = -translateY > tyMax ? translateY + tyMax : 0
   return (
     <ul
-      className='relative mx-auto p-0 w-[600px] duration-600'
-      style={{ transform: `translateY(${finalTranslateY}px)` }}
+      ref={containerRef}
+      className='mx-auto p-0 w-[600px] h-full overflow-y-auto scrollbar-hide'
     >
       {Object.keys(lyricJson).map((key, index) => (
         <li
           key={index}
+          ref={(el: HTMLLIElement | null) => {
+            lineRefs.current[index] = el
+          }}
           className={`list-none p-0 m-0 ${
             index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''
           }`}
