@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
 import { loadLyricJson } from '@/lyricUtils'
 import { useIsMobile } from '@/useMobile'
@@ -12,11 +12,11 @@ const Player: React.FC = () => {
   const [isNotFound, setIsNotFound] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const location = useLocation()
-
+  const navigate = useNavigate()
   useEffect(() => {
     const lyricName = location.pathname.slice(1)
     if (lyricName === '') {
-      window.location.href = '#/iki'
+      navigate('/ikite')
       return
     }
 
@@ -51,7 +51,7 @@ const Player: React.FC = () => {
       </div>
       <div className='flex justify-center'>
         {isNotFound ? (
-          <h1 className='text-center'>404 - Lyric Not Found</h1>
+          <h1 className='w-[600px] text-center'>404 - Lyric Not Found</h1>
         ) : (
           lyricJson && (
             <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />

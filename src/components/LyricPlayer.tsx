@@ -41,7 +41,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   return (
     <ul
       ref={containerRef}
-      className='mx-auto p-0 w-[600px] h-full overflow-y-auto scrollbar-hide'
+      className='mx-auto w-[600px] h-full overflow-y-auto scrollbar-hide'
     >
       {Object.keys(lyricJson).map((key, index) => (
         <li
@@ -49,12 +49,12 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           ref={(el: HTMLLIElement | null) => {
             lineRefs.current[index] = el
           }}
-          className={`list-none p-0 m-0 ${
+          className={`list-none ${
             index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''
           }`}
         >
           {lyricJson[key].map((line: string, i: number) => (
-            <p key={i} className='break-words min-h-5 text-center mt-0 mb-4'>
+            <p key={i} className='break-words min-h-5 text-center mb-4'>
               {line}
             </p>
           ))}
