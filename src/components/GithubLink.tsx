@@ -1,4 +1,4 @@
-import useTheme from '@/useTheme'
+import useTheme from '@/hooks/use-theme'
 
 const GithubLink: React.FC = () => {
   const { theme } = useTheme()

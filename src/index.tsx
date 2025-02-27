@@ -3,9 +3,9 @@ import { HashRouter } from 'react-router-dom'
 import Sidebar from '@/components/Sidebar'
 import Player from '@/components/Player'
 import GithubLink from '@/components/GithubLink'
+import useTheme from '@/hooks/use-theme'
+import { useIsMobile } from '@/hooks/use-mobile'
 import '@/global.css'
-import useTheme from '@/useTheme'
-import { useIsMobile } from '@/useMobile'
 
 const App = () => {
   useTheme()
