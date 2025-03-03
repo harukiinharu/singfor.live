@@ -74,7 +74,7 @@ const MobileSidebar: React.FC = () => {
       <div
         className={cn(
           'absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333]',
-          ' rounded-lg shadow-lg max-h-[70vh] overflow-y-auto',
+          'rounded-lg shadow-lg max-h-[70vh] overflow-y-auto',
           'transition-all duration-300 ease-in-out',
           isOpen
             ? 'opacity-100 translate-y-0'

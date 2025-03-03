@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { getCurrentLine } from '@/lyricUtils'
+import { cn } from '@/lib/utils'
 
 interface LyricPlayerProps {
   audio: HTMLAudioElement
@@ -49,9 +50,10 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           ref={(el: HTMLLIElement | null) => {
             lineRefs.current[index] = el
           }}
-          className={`list-none ${
+          className={cn(
+            'list-none',
             index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''
-          }`}
+          )}
         >
           {lyricJson[key].map((line: string, i: number) => (
             <p key={i} className='break-words min-h-5 text-center mb-4'>

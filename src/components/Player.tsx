@@ -10,14 +10,12 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
     null
   )
-  const [isNotFound, setIsNotFound] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const location = useLocation()
   useEffect(() => {
     loadLyricJson(lyricId).then(result => {
       if (result) {
         setLyricJson(result)
-        setIsNotFound(false)
         if (audioRef.current) {
           audioRef.current.src = `./audio/${lyricId}.mp3`
           audioRef.current.volume = 0.5
@@ -30,7 +28,6 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
           audioRef.current.currentTime = 0
         }
         setLyricJson(null)
-        setIsNotFound(true)
       }
     })
   }, [location])
@@ -49,12 +46,10 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
         <audio className='w-full' ref={audioRef} controls />
       </div>
       <div className='flex justify-center'>
-        {isNotFound ? (
-          <h1 className='w-[600px] text-center'>404 - Lyric Not Found</h1>
+        {lyricJson ? (
+          <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
         ) : (
-          lyricJson && (
-            <LyricPlayer audio={audioRef.current!} lyricJson={lyricJson} />
-          )
+          <h1 className='w-[600px] text-center'>404 - Lyric Not Found</h1>
         )}
       </div>
     </div>

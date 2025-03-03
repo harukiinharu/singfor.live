@@ -6,6 +6,7 @@ import GithubLink from '@/components/GithubLink'
 import useTheme from '@/hooks/use-theme'
 import useIsMobile from '@/hooks/use-mobile'
 import lyricNamesMap from '@/routes'
+import NotFound from '@/components/NotFound'
 import '@/global.css'
 
 const App = () => {
@@ -15,16 +16,17 @@ const App = () => {
     <HashRouter>
       <Routes>
         <Route path='/' element={<Navigate to='/ikite' />} />
+        <Route path='*' element={<NotFound />} />
         {lyricNamesMap.map(route => (
           <Route
             key={route.id}
             path={`/${route.id}`}
             element={
               <>
-                {isMobile ? <></> : <GithubLink />}
+                {!isMobile && <GithubLink />}
                 <div className='flex justify-center min-h-screen'>
                   <div className='flex'>
-                    {isMobile ? <></> : <Sidebar />}
+                    {!isMobile && <Sidebar />}
                     <Player lyricId={route.id} />
                   </div>
                 </div>
