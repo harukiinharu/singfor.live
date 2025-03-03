@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import lyricNamesMap from '@/routes'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
   return (
@@ -32,51 +33,56 @@ const MobileSidebar: React.FC = () => {
     <div className='w-full mb-4'>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='w-full py-3 px-4 bg-white dark:bg-[#333] rounded-lg shadow-md flex items-center justify-center'
+        className={cn(
+          'w-full py-3 px-4 bg-white dark:bg-[#333] rounded-lg shadow-md',
+          'flex items-center justify-center'
+        )}
       >
         <div className='relative w-6 h-6'>
-          {/* 三横杠 */}
-          <div
-            className={`absolute inset-0 transition-opacity duration-300 ${
-              isOpen ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            <svg
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-            >
-              <line x1='3' y1='6' x2='21' y2='6' />
-              <line x1='3' y1='12' x2='21' y2='12' />
-              <line x1='3' y1='18' x2='21' y2='18' />
-            </svg>
-          </div>
-          {/* 向下箭头 */}
-          <div
-            className={`absolute inset-0 transition-opacity duration-300 ${
-              isOpen ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <svg
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <path d='M6 9l6 6 6-6' />
-            </svg>
-          </div>
+          {isOpen ? (
+            // 三横杠
+            <div className='inset-0'>
+              <svg
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+              >
+                <line x1='3' y1='6' x2='21' y2='6' />
+                <line x1='3' y1='12' x2='21' y2='12' />
+                <line x1='3' y1='18' x2='21' y2='18' />
+              </svg>
+            </div>
+          ) : (
+            // 向下箭头
+            <div className='inset-0'>
+              <svg
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <path d='M6 9l6 6 6-6' />
+              </svg>
+            </div>
+          )}
         </div>
       </button>
-      {isOpen && (
-        <div className='absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333] rounded-lg shadow-lg max-h-[70vh] overflow-y-auto'>
-          <SidebarContent onClick={() => setIsOpen(false)} />
-        </div>
-      )}
+      <div
+        className={cn(
+          'absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333]',
+          ' rounded-lg shadow-lg max-h-[70vh] overflow-y-auto',
+          'transition-all duration-300 ease-in-out',
+          isOpen
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 -translate-y-4 pointer-events-none'
+        )}
+      >
+        <SidebarContent onClick={() => setIsOpen(false)} />
+      </div>
     </div>
   )
 }

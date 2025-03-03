@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client'
-import { HashRouter } from 'react-router-dom'
+import { HashRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { Sidebar } from '@/components/Sidebar'
 import Player from '@/components/Player'
 import GithubLink from '@/components/GithubLink'
 import useTheme from '@/hooks/use-theme'
 import useIsMobile from '@/hooks/use-mobile'
+import lyricNamesMap from '@/routes'
 import '@/global.css'
 
 const App = () => {
@@ -12,13 +13,26 @@ const App = () => {
   const isMobile = useIsMobile()
   return (
     <HashRouter>
-      {isMobile ? <></> : <GithubLink />}
-      <div className='flex justify-center min-h-screen'>
-        <div className='flex'>
-          {isMobile ? <></> : <Sidebar />}
-          <Player />
-        </div>
-      </div>
+      <Routes>
+        <Route path='/' element={<Navigate to='/ikite' />} />
+        {lyricNamesMap.map(route => (
+          <Route
+            key={route.id}
+            path={`/${route.id}`}
+            element={
+              <>
+                {isMobile ? <></> : <GithubLink />}
+                <div className='flex justify-center min-h-screen'>
+                  <div className='flex'>
+                    {isMobile ? <></> : <Sidebar />}
+                    <Player lyricId={route.id} />
+                  </div>
+                </div>
+              </>
+            }
+          />
+        ))}
+      </Routes>
     </HashRouter>
   )
 }

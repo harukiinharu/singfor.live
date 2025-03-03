@@ -1,31 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
 import { loadLyricJson } from '@/lyricUtils'
 import useIsMobile from '@/hooks/use-mobile'
 import { MobileSidebar } from '@/components/Sidebar'
+import { cn } from '@/lib/utils'
 
-const Player: React.FC = () => {
+const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
     null
   )
   const [isNotFound, setIsNotFound] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const location = useLocation()
-  const navigate = useNavigate()
   useEffect(() => {
-    const lyricName = location.pathname.slice(1)
-    if (lyricName === '') {
-      navigate('/ikite')
-      return
-    }
-
-    loadLyricJson(lyricName).then(result => {
+    loadLyricJson(lyricId).then(result => {
       if (result) {
         setLyricJson(result)
         setIsNotFound(false)
         if (audioRef.current) {
-          audioRef.current.src = `./audio/${lyricName}.mp3`
+          audioRef.current.src = `./audio/${lyricId}.mp3`
           audioRef.current.volume = 0.5
           audioRef.current.load()
         }
@@ -45,8 +39,13 @@ const Player: React.FC = () => {
 
   return (
     <div className='max-w-[80vw]'>
-      <div className='sticky flex flex-col justify-center top-0 py-[30px] bg-background z-1'>
-        {isMobile ? <MobileSidebar /> : <></>}
+      <div
+        className={cn(
+          'sticky flex flex-col justify-center',
+          'top-0 py-[30px] bg-background z-1'
+        )}
+      >
+        {isMobile && <MobileSidebar />}
         <audio className='w-full' ref={audioRef} controls />
       </div>
       <div className='flex justify-center'>
