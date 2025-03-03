@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 
 const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-4'>
       {lyricNamesMap.map(route => (
         <NavLink
           key={route.id}
@@ -34,7 +34,7 @@ const MobileSidebar: React.FC = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'w-full py-3 px-4 bg-white dark:bg-[#333] rounded-lg shadow-md',
+          'w-full py-[15px] px-4 bg-white dark:bg-[#333] rounded-4xl shadow-md',
           'flex items-center justify-center'
         )}
       >
@@ -74,7 +74,7 @@ const MobileSidebar: React.FC = () => {
       <div
         className={cn(
           'absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333]',
-          'rounded-lg shadow-lg max-h-[70vh] overflow-y-auto',
+          'rounded-4xl shadow-lg max-h-[70vh] overflow-y-auto',
           'transition-all duration-300 ease-in-out',
           isOpen
             ? 'opacity-100 translate-y-0'
@@ -89,7 +89,7 @@ const MobileSidebar: React.FC = () => {
 
 const Sidebar: React.FC = () => {
   return (
-    <div className='sticky top-0 h-screen overflow-y-auto py-[100px] w-[300px]'>
+    <div className='sticky top-0 h-screen overflow-y-auto py-[36px] w-[300px]'>
       <SidebarContent />
     </div>
   )
