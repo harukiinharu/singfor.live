@@ -39,8 +39,11 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
       <div
         className={cn(
           'sticky flex flex-col justify-center',
-          'top-0 pt-[80px] pb-[30px] bg-background z-1'
+          'top-0 pb-[30px] bg-background z-1'
         )}
+        style={{
+          paddingTop: isMobile ? '36px' : '100px',
+        }}
       >
         {isMobile && <MobileSidebar />}
         <audio className='w-full' ref={audioRef} controls />

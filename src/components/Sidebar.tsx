@@ -12,7 +12,7 @@ const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
           to={`/${route.id}`}
           onClick={onClick}
           className={({ isActive }) =>
-            `text-center py-[15px] mx-5 rounded-[50px] no-underline border ${
+            `text-center py-[14px] mx-5 rounded-[50px] no-underline border ${
               isActive
                 ? 'border-[#fd4a47]'
                 : 'border-transparent hover:border-[#fd4a47]'
@@ -89,7 +89,7 @@ const MobileSidebar: React.FC = () => {
 
 const Sidebar: React.FC = () => {
   return (
-    <div className='sticky top-0 h-screen overflow-y-auto py-[80px] w-[300px]'>
+    <div className='sticky top-0 h-screen overflow-y-auto py-[100px] w-[300px]'>
       <SidebarContent />
     </div>
   )
