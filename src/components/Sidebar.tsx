@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { lyricNamesMap } from '@/routes'
+import lyricNamesMap from '@/routes'
 import { useState } from 'react'
 
 const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
@@ -25,7 +25,7 @@ const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
   )
 }
 
-export const MobileSidebar: React.FC = () => {
+const MobileSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -89,4 +89,4 @@ const Sidebar: React.FC = () => {
   )
 }
 
-export default Sidebar
+export { Sidebar, MobileSidebar }

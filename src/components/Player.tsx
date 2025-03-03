@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
 import { loadLyricJson } from '@/lyricUtils'
-import { useIsMobile } from '@/hooks/use-mobile'
+import useIsMobile from '@/hooks/use-mobile'
 import { MobileSidebar } from '@/components/Sidebar'
 
 const Player: React.FC = () => {

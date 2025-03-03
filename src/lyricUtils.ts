@@ -1,7 +1,4 @@
-export const getCurrentLine = (
-  lyricTime: number[],
-  currentTime: number
-): number => {
+const getCurrentLine = (lyricTime: number[], currentTime: number): number => {
   let left = -1
   let right = lyricTime.length - 1
   let mid: number
@@ -18,7 +15,7 @@ export const getCurrentLine = (
   return left
 }
 
-export const loadLyricJson = async (
+const loadLyricJson = async (
   lyricName: string
 ): Promise<Record<string, string[]> | null> => {
   try {
@@ -29,3 +26,5 @@ export const loadLyricJson = async (
     return null
   }
 }
+
+export { getCurrentLine, loadLyricJson }

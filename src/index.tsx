@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
-import Sidebar from '@/components/Sidebar'
+import { Sidebar } from '@/components/Sidebar'
 import Player from '@/components/Player'
 import GithubLink from '@/components/GithubLink'
 import useTheme from '@/hooks/use-theme'
-import { useIsMobile } from '@/hooks/use-mobile'
+import useIsMobile from '@/hooks/use-mobile'
 import '@/global.css'
 
 const App = () => {
