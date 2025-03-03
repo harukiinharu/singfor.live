@@ -7,6 +7,25 @@ import { MobileSidebar } from '@/components/Sidebar'
 import { cn } from '@/lib/utils'
 
 const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
+  const [isPlaying, setIsPlaying] = useState(false)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === ' ') {
+        event.preventDefault()
+        if (isPlaying) audioRef.current?.pause()
+        else audioRef.current?.play()
+        setIsPlaying(!isPlaying)
+      } else if (event.key === 'ArrowRight') {
+        audioRef.current.currentTime += 5
+      } else if (event.key === 'ArrowLeft') {
+        audioRef.current.currentTime -= 5
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isPlaying])
   const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
     null
   )
