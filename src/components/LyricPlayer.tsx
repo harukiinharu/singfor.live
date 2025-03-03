@@ -56,7 +56,20 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           )}
         >
           {lyricJson[key].map((line: string, i: number) => (
-            <p key={i} className='break-words min-h-5 text-center mb-4'>
+            <p
+              key={i}
+              className={cn(
+                'break-words min-h-5 text-center mb-4',
+                line && 'cursor-pointer'
+              )}
+              onClick={() => {
+                if (line !== '') {
+                  audio.currentTime =
+                    parseFloat(key.substring(1, 3)) * 60 +
+                    parseFloat(key.substring(4, 10))
+                }
+              }}
+            >
               {line}
             </p>
           ))}
