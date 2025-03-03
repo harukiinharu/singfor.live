@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import lyricNamesMap from '@/routes'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 
 const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
@@ -28,14 +28,37 @@ const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
 
 const MobileSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const sidebarRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        sidebarRef.current &&
+        buttonRef.current &&
+        !sidebarRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
     <div className='w-full mb-4'>
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'w-full py-[15px] px-4 bg-white dark:bg-[#333] rounded-4xl shadow-md',
-          'flex items-center justify-center'
+          'flex items-center justify-center',
+          'w-full py-[15px] px-4 bg-white dark:bg-[#333]',
+          'rounded-4xl shadow-md cursor-pointer'
         )}
       >
         <div className='relative w-6 h-6'>
@@ -72,6 +95,7 @@ const MobileSidebar: React.FC = () => {
         </div>
       </button>
       <div
+        ref={sidebarRef}
         className={cn(
           'absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333]',
           'rounded-4xl shadow-lg max-h-[70vh] overflow-y-auto',
