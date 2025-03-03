@@ -39,7 +39,7 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
       <div
         className={cn(
           'sticky flex flex-col justify-center',
-          'top-0 py-[30px] bg-background z-1'
+          'top-0 pt-[80px] pb-[30px] bg-background z-1'
         )}
       >
         {isMobile && <MobileSidebar />}

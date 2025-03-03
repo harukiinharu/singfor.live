@@ -39,7 +39,7 @@ const MobileSidebar: React.FC = () => {
         )}
       >
         <div className='relative w-6 h-6'>
-          {isOpen ? (
+          {!isOpen ? (
             // 三横杠
             <div className='inset-0'>
               <svg
@@ -89,7 +89,7 @@ const MobileSidebar: React.FC = () => {
 
 const Sidebar: React.FC = () => {
   return (
-    <div className='sticky top-0 h-screen overflow-y-auto py-[30px] w-[300px]'>
+    <div className='sticky top-0 h-screen overflow-y-auto py-[80px] w-[300px]'>
       <SidebarContent />
     </div>
   )
