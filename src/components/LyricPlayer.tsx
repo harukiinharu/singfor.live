@@ -51,9 +51,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
         }
 
         if (newIndex !== currentLineIdx) {
-          setCurrentLine(newIndex)
-          const timestamps = Object.keys(lyricJson)
-          const newTimestamp = timestamps[newIndex]
+          const newTimestamp = Object.keys(lyricJson)[newIndex]
           if (newTimestamp) {
             audio.currentTime =
               parseFloat(newTimestamp.substring(1, 3)) * 60 +

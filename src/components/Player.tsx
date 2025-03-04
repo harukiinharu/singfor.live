@@ -36,18 +36,9 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
     loadLyricJson(lyricId).then(result => {
       if (result) {
         setLyricJson(result)
-        if (audioRef.current) {
-          audioRef.current.src = `./audio/${lyricId}.mp3`
-          audioRef.current.volume = 0.5
-          audioRef.current.load()
-        }
-      } else {
-        if (audioRef.current) {
-          audioRef.current.src = ''
-          audioRef.current.pause()
-          audioRef.current.currentTime = 0
-        }
-        setLyricJson(null)
+        audioRef.current.src = `./audio/${lyricId}.mp3`
+        audioRef.current.volume = 0.5
+        audioRef.current.load()
       }
     })
   }, [location])
