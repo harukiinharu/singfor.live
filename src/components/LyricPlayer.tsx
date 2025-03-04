@@ -9,7 +9,7 @@ interface LyricPlayerProps {
 const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const [currentLineIdx, setCurrentLine] = useState(-1)
   const containerRef = useRef<HTMLUListElement>(null)
-  const lineRefs = useRef<(HTMLLIElement | null)[]>([])
+  const lineRefs = useRef<HTMLLIElement[]>([])
 
   const lyricTime = useMemo(() => {
     return Object.keys(lyricJson).map(timestamp => {
@@ -38,6 +38,36 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
   }, [currentLineIdx])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault()
+        const totalLines = Object.keys(lyricJson).length
+        let newIndex = currentLineIdx
+        if (e.key === 'ArrowUp') {
+          newIndex = Math.max(0, currentLineIdx - 1)
+        } else if (e.key === 'ArrowDown') {
+          newIndex = Math.min(totalLines - 1, currentLineIdx + 1)
+        }
+
+        if (newIndex !== currentLineIdx) {
+          setCurrentLine(newIndex)
+          const timestamps = Object.keys(lyricJson)
+          const newTimestamp = timestamps[newIndex]
+          if (newTimestamp) {
+            audio.currentTime =
+              parseFloat(newTimestamp.substring(1, 3)) * 60 +
+              parseFloat(newTimestamp.substring(4, 10)) +
+              0.001
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [currentLineIdx, lyricJson, audio])
+
   return (
     <ul
       ref={containerRef}
@@ -46,7 +76,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
       {Object.keys(lyricJson).map((key, index) => (
         <li
           key={index}
-          ref={(el: HTMLLIElement | null) => {
+          ref={(el: HTMLLIElement) => {
             lineRefs.current[index] = el
           }}
           className={cn(
