@@ -9,7 +9,7 @@ import lyricNamesMap from '@/routes'
 import NotFound from '@/components/NotFound'
 import '@/global.css'
 
-const App = () => {
+const App: React.FC = () => {
   useTheme()
   const isMobile = useIsMobile()
   return (

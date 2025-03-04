@@ -1,6 +1,5 @@
-import { useEffect, useState, useRef } from 'react'
-import { getCurrentLine } from '@/lyricUtils'
-import { cn } from '@/lib/utils'
+import { useEffect, useState, useRef, useMemo } from 'react'
+import { getCurrentLine, cn } from '@/lib/utils'
 
 interface LyricPlayerProps {
   audio: HTMLAudioElement
@@ -12,20 +11,20 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   const containerRef = useRef<HTMLUListElement>(null)
   const lineRefs = useRef<(HTMLLIElement | null)[]>([])
 
+  const lyricTime = useMemo(() => {
+    return Object.keys(lyricJson).map(timestamp => {
+      return (
+        parseFloat(timestamp.substring(1, 3)) * 60 +
+        parseFloat(timestamp.substring(4, 10))
+      )
+    })
+  }, [lyricJson])
+
   useEffect(() => {
     const handleTimeUpdate = () => {
-      const newLineIdx = getCurrentLine(
-        Object.keys(lyricJson).map(timestamp => {
-          return (
-            parseFloat(timestamp.substring(1, 3)) * 60 +
-            parseFloat(timestamp.substring(4, 10))
-          )
-        }),
-        audio.currentTime
-      )
+      const newLineIdx = getCurrentLine(lyricTime, audio.currentTime)
       if (newLineIdx !== currentLineIdx) {
         setCurrentLine(newLineIdx)
-        // Scroll to the current line smoothly
         if (newLineIdx >= 0 && lineRefs.current[newLineIdx]) {
           lineRefs.current[newLineIdx]?.scrollIntoView({
             behavior: 'smooth',
@@ -63,7 +62,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
                 line && 'cursor-pointer'
               )}
               onClick={() => {
-                if (line !== '') {
+                if (line) {
                   audio.currentTime =
                     parseFloat(key.substring(1, 3)) * 60 +
                     parseFloat(key.substring(4, 10)) +

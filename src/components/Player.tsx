@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import LyricPlayer from '@/components/LyricPlayer'
-import { loadLyricJson } from '@/lyricUtils'
+import { loadLyricJson } from '@/lib/utils'
 import useIsMobile from '@/hooks/use-mobile'
 import { MobileSidebar } from '@/components/Sidebar'
 import { cn } from '@/lib/utils'
 
 const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const [lyricJson, setLyricJson] = useState<Record<string, string[]>>(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const location = useLocation()
+  const isMobile = useIsMobile()
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ' ') {
@@ -26,11 +31,7 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [isPlaying])
-  const [lyricJson, setLyricJson] = useState<Record<string, string[]> | null>(
-    null
-  )
-  const audioRef = useRef<HTMLAudioElement>(null)
-  const location = useLocation()
+
   useEffect(() => {
     loadLyricJson(lyricId).then(result => {
       if (result) {
@@ -50,8 +51,6 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
       }
     })
   }, [location])
-
-  const isMobile = useIsMobile()
 
   return (
     <div className='max-w-[80vw]'>
