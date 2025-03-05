@@ -7,30 +7,10 @@ import { MobileSidebar } from '@/components/Sidebar'
 import { cn } from '@/lib/utils'
 
 const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
-  const [isPlaying, setIsPlaying] = useState(false)
   const [lyricJson, setLyricJson] = useState<Record<string, string[]>>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
   const location = useLocation()
   const isMobile = useIsMobile()
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === ' ') {
-        event.preventDefault()
-        if (isPlaying) audioRef.current?.pause()
-        else audioRef.current?.play()
-        setIsPlaying(!isPlaying)
-      } else if (event.key === 'ArrowRight') {
-        audioRef.current.currentTime += 5
-      } else if (event.key === 'ArrowLeft') {
-        audioRef.current.currentTime -= 5
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isPlaying])
 
   useEffect(() => {
     loadLyricJson(lyricId).then(result => {
@@ -47,7 +27,7 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
     <div className='max-w-[80vw]'>
       <div className={cn('sticky flex flex-col justify-center', 'top-0 pt-[36px] pb-[30px] bg-background z-1')}>
         {isMobile && <MobileSidebar />}
-        <audio className='w-full' ref={audioRef} controls />
+        <audio className='w-full' ref={audioRef} controls controlsList='nodownload noplaybackrate' />
       </div>
       <div className='flex justify-center'>
         {lyricJson ? (

@@ -17,6 +17,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     })
   }, [lyricJson])
 
+  // time update event
   useEffect(() => {
     const handleTimeUpdate = () => {
       const newLineIdx = getCurrentLine(lyricTime, audio.currentTime)
@@ -35,10 +36,14 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
   }, [currentLineIdx])
 
+  // keyboard event
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      if (e.key === ' ') {
         e.preventDefault()
+        if (audio.paused) audio.play()
+        else audio.pause()
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
         const totalLines = Object.keys(lyricJson).length
         let newIndex = currentLineIdx
         if (e.key === 'ArrowUp') {
@@ -63,6 +68,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [currentLineIdx, lyricJson, audio])
 
+  // handle hash
   useEffect(() => {
     const hash = window.location.hash
     const hashParts = hash.split('?')
@@ -86,7 +92,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
   }, [lyricJson, audio])
 
   return (
-    <ul ref={containerRef} className='mx-auto w-[600px] h-full overflow-y-auto scrollbar-hide'>
+    <ul ref={containerRef} className='w-[600px]'>
       {Object.keys(lyricJson).map((key, index) => (
         <li
           key={index}
@@ -94,12 +100,12 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           ref={(el: HTMLLIElement) => {
             lineRefs.current[index] = el
           }}
-          className={cn('list-none', index === currentLineIdx ? 'text-[#fd4a47] font-bold' : '')}
+          className={index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''}
         >
           {lyricJson[key].map((line: string, i: number) => (
             <p
               key={i}
-              className={cn('break-words min-h-5 text-center mb-4', line && 'cursor-pointer')}
+              className={cn('min-h-[24px] text-center mb-4', line && 'cursor-pointer')}
               onClick={() => {
                 if (line) {
                   audio.currentTime = parseFloat(key.substring(1, 3)) * 60 + parseFloat(key.substring(4, 10)) + 0.001
