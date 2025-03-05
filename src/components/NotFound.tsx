@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const NotFound: React.FC = () => {
-  const [countdown, setCountdown] = useState(5)
+  const [countdown, setCountdown] = useState(3)
   const navigate = useNavigate()
   useEffect(() => {
     const interval = setInterval(() => {

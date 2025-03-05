@@ -13,9 +13,7 @@ const SidebarContent: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
           onClick={onClick}
           className={({ isActive }) =>
             `text-center py-[14px] mx-5 rounded-[50px] no-underline border ${
-              isActive
-                ? 'border-[#fd4a47]'
-                : 'border-transparent hover:border-[#fd4a47]'
+              isActive ? 'border-[#fd4a47]' : 'border-transparent hover:border-[#fd4a47]'
             }`
           }
         >
@@ -65,13 +63,7 @@ const MobileSidebar: React.FC = () => {
           {!isOpen ? (
             // 三横杠
             <div className='inset-0'>
-              <svg
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-              >
+              <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round'>
                 <line x1='3' y1='6' x2='21' y2='6' />
                 <line x1='3' y1='12' x2='21' y2='12' />
                 <line x1='3' y1='18' x2='21' y2='18' />
@@ -100,9 +92,7 @@ const MobileSidebar: React.FC = () => {
           'absolute left-0 right-0 z-10 mt-2 p-4 bg-white dark:bg-[#333]',
           'rounded-4xl shadow-lg max-h-[70vh] overflow-y-auto',
           'transition-all duration-300 ease-in-out',
-          isOpen
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 -translate-y-4 pointer-events-none'
+          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
         )}
       >
         <SidebarContent onClick={() => setIsOpen(false)} />

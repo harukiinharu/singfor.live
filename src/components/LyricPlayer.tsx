@@ -13,10 +13,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
 
   const lyricTime = useMemo(() => {
     return Object.keys(lyricJson).map(timestamp => {
-      return (
-        parseFloat(timestamp.substring(1, 3)) * 60 +
-        parseFloat(timestamp.substring(4, 10))
-      )
+      return parseFloat(timestamp.substring(1, 3)) * 60 + parseFloat(timestamp.substring(4, 10))
     })
   }, [lyricJson])
 
@@ -54,9 +51,9 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
           const newTimestamp = Object.keys(lyricJson)[newIndex]
           if (newTimestamp) {
             audio.currentTime =
-              parseFloat(newTimestamp.substring(1, 3)) * 60 +
-              parseFloat(newTimestamp.substring(4, 10)) +
-              0.001
+              parseFloat(newTimestamp.substring(1, 3)) * 60 + parseFloat(newTimestamp.substring(4, 10)) + 0.001
+            const hashParts = window.location.hash.split('?')
+            window.history.pushState({}, '', `${hashParts[0]}?id=${newIndex}`)
           }
         }
       }
@@ -66,35 +63,48 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [currentLineIdx, lyricJson, audio])
 
+  useEffect(() => {
+    const hash = window.location.hash
+    const hashParts = hash.split('?')
+    if (hashParts.length > 1) {
+      const searchParams = new URLSearchParams(hashParts[1])
+      const id = searchParams.get('id')
+      if (id) {
+        const targetElement = document.getElementById(id)
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
+          audio.currentTime =
+            parseFloat(Object.keys(lyricJson)[id].substring(1, 3)) * 60 +
+            parseFloat(Object.keys(lyricJson)[id].substring(4, 10)) +
+            0.001
+        }
+      }
+    }
+  }, [lyricJson, audio])
+
   return (
-    <ul
-      ref={containerRef}
-      className='mx-auto w-[600px] h-full overflow-y-auto scrollbar-hide'
-    >
+    <ul ref={containerRef} className='mx-auto w-[600px] h-full overflow-y-auto scrollbar-hide'>
       {Object.keys(lyricJson).map((key, index) => (
         <li
           key={index}
+          id={`${index}`}
           ref={(el: HTMLLIElement) => {
             lineRefs.current[index] = el
           }}
-          className={cn(
-            'list-none',
-            index === currentLineIdx ? 'text-[#fd4a47] font-bold' : ''
-          )}
+          className={cn('list-none', index === currentLineIdx ? 'text-[#fd4a47] font-bold' : '')}
         >
           {lyricJson[key].map((line: string, i: number) => (
             <p
               key={i}
-              className={cn(
-                'break-words min-h-5 text-center mb-4',
-                line && 'cursor-pointer'
-              )}
+              className={cn('break-words min-h-5 text-center mb-4', line && 'cursor-pointer')}
               onClick={() => {
                 if (line) {
-                  audio.currentTime =
-                    parseFloat(key.substring(1, 3)) * 60 +
-                    parseFloat(key.substring(4, 10)) +
-                    0.001
+                  audio.currentTime = parseFloat(key.substring(1, 3)) * 60 + parseFloat(key.substring(4, 10)) + 0.001
+                  const hashParts = window.location.hash.split('?')
+                  window.history.pushState({}, '', `${hashParts[0]}?id=${index}`)
                 }
               }}
             >

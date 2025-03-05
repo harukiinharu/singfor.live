@@ -18,9 +18,7 @@ function getCurrentLine(lyricTime: number[], currentTime: number): number {
   return left
 }
 
-async function loadLyricJson(
-  lyricName: string
-): Promise<Record<string, string[]>> {
+async function loadLyricJson(lyricName: string): Promise<Record<string, string[]>> {
   try {
     const response = await fetch(`./lyric/${lyricName}.json`)
     const lyricJson: Record<string, string[]> = await response.json()

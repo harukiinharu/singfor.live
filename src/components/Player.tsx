@@ -45,12 +45,7 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
 
   return (
     <div className='max-w-[80vw]'>
-      <div
-        className={cn(
-          'sticky flex flex-col justify-center',
-          'top-0 pt-[36px] pb-[30px] bg-background z-1'
-        )}
-      >
+      <div className={cn('sticky flex flex-col justify-center', 'top-0 pt-[36px] pb-[30px] bg-background z-1')}>
         {isMobile && <MobileSidebar />}
         <audio className='w-full' ref={audioRef} controls />
       </div>
