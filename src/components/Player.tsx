@@ -13,10 +13,11 @@ const Player: React.FC<{ lyricId: string }> = ({ lyricId }) => {
   const isMobile = useIsMobile()
 
   useEffect(() => {
-    loadLyricJson(lyricId).then(result => {
+    loadLyricJson(lyricId).then(async result => {
       if (result) {
         setLyricJson(result)
-        audioRef.current.src = `./audio/${lyricId}.mp3`
+        const response = await import(`@/audio/${lyricId}.mp3`)
+        audioRef.current.src = response.default
         audioRef.current.volume = 0.5
         audioRef.current.load()
       }
