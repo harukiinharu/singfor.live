@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+tcb hosting deploy dist singfor.lvie -e singfor-live-9gizzbuc59a85fe6
