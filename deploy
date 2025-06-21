@@ -1,3 +1,4 @@
 #! /bin/zsh
 
+tcb hosting delete --dir singfor.live -e singfor-live-9gizzbuc59a85fe6
 tcb hosting deploy dist singfor.live -e singfor-live-9gizzbuc59a85fe6
