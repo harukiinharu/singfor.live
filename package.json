@@ -1,10 +1,9 @@
 {
   "type": "module",
-  "packageManager": "pnpm@10.10.0",
   "scripts": {
     "d": "vite",
     "b": "vite build",
-    "p": "pnpx http-server dist -a localhost -p 5173"
+    "p": "bunx http-server dist -a localhost -p 5173"
   },
   "dependencies": {
     "clsx": "^2.1.1",
