@@ -55,8 +55,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
         if (newIndex !== currentLineIdx) {
           const newTimestamp = Object.keys(lyricJson)[newIndex]
           if (newTimestamp) {
-            audio.currentTime =
-              parseFloat(newTimestamp.substring(1, 3)) * 60 + parseFloat(newTimestamp.substring(4, 10)) + 0.001
+            audio.currentTime = parseFloat(newTimestamp.substring(1, 3)) * 60 + parseFloat(newTimestamp.substring(4, 10)) + 0.001
             const hashParts = window.location.hash.split('?')
             window.history.pushState({}, '', `${hashParts[0]}?id=${newIndex}`)
           }
@@ -83,9 +82,7 @@ const LyricPlayer: React.FC<LyricPlayerProps> = ({ audio, lyricJson }) => {
             block: 'center',
           })
           audio.currentTime =
-            parseFloat(Object.keys(lyricJson)[id].substring(1, 3)) * 60 +
-            parseFloat(Object.keys(lyricJson)[id].substring(4, 10)) +
-            0.001
+            parseFloat(Object.keys(lyricJson)[id].substring(1, 3)) * 60 + parseFloat(Object.keys(lyricJson)[id].substring(4, 10)) + 0.001
         }
       }
     }

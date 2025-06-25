@@ -53,11 +53,7 @@ const MobileSidebar: React.FC = () => {
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className={cn(
-          'flex items-center justify-center',
-          'w-full py-[15px] px-4 bg-white dark:bg-[#333]',
-          'rounded-4xl shadow-md cursor-pointer'
-        )}
+        className={cn('flex items-center justify-center', 'w-full py-[15px] px-4 bg-white dark:bg-[#333]', 'rounded-4xl shadow-md cursor-pointer')}
       >
         <div className='relative w-6 h-6'>
           {!isOpen ? (
@@ -72,14 +68,7 @@ const MobileSidebar: React.FC = () => {
           ) : (
             // 向下箭头
             <div className='inset-0'>
-              <svg
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-              >
+              <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
                 <path d='M6 9l6 6 6-6' />
               </svg>
             </div>
