@@ -12,7 +12,6 @@ function useTheme() {
     const handleChange = (e: MediaQueryListEvent) => {
       setTheme(e.matches ? 'dark' : 'light')
     }
-
     mediaQuery.addEventListener('change', handleChange)
 
     if (theme === 'dark') {
